@@ -1,0 +1,10 @@
+# MySQL 生产配置：通过 SPRING_PROFILES_ACTIVE=mysql 激活
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB:smartchat}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER:smartchat}
+    password: ${MYSQL_PASSWORD:smartchat123}
+  jpa:
+    hibernate:
+      ddl-auto: update

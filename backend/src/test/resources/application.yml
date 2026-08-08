@@ -1,0 +1,23 @@
+# 测试环境：内存数据库，不配置 AI Key
+spring:
+  datasource:
+    url: jdbc:h2:mem:smartchat-test;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+
+# 测试环境会覆盖主配置，业务配置项需在此补齐
+smartchat:
+  jwt:
+    secret: test-secret-key-for-unit-tests-0123456789abcdef
+    expire-days: 7
+  ai:
+    provider: openai
+    base-url: https://api.deepseek.com
+    api-key: ''
+    model: deepseek-chat
+    max-context-messages: 20

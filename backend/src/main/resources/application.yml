@@ -1,0 +1,44 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: smartchat
+  # ---------- 数据库 ----------
+  # 默认 H2 内嵌文件库，数据保存在 ./data 目录，零安装即可运行
+  # 切换 MySQL：spring.profiles.active=mysql，并在下方覆盖配置
+  datasource:
+    url: jdbc:h2:file:./data/smartchat;MODE=MySQL;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+
+# ---------- 业务配置 ----------
+smartchat:
+  # JWT 密钥（生产环境务必通过环境变量 JWT_SECRET 覆盖）
+  jwt:
+    secret: ${JWT_SECRET:smartchat-dev-secret-please-change-in-production-0123456789}
+    expire-days: ${JWT_EXPIRE_DAYS:7}
+  # ---------- AI 默认配置 ----------
+  # 优先级：用户个人 API 配置 > 以下环境变量 > 报错提示
+  # 支持 OpenAI 兼容协议（DeepSeek/OpenAI/Kimi/通义千问等）和 Anthropic Claude
+  ai:
+    provider: ${AI_PROVIDER:openai}
+    base-url: ${AI_BASE_URL:https://api.deepseek.com}
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:deepseek-chat}
+    # 对话上下文最大携带条数（防止超长）
+    max-context-messages: ${AI_MAX_CONTEXT_MESSAGES:20}

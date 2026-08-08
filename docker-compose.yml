@@ -1,0 +1,21 @@
+# MySQL 部署示例（可选，默认使用 H2 内嵌数据库，无需任何外部依赖）
+# 用法：
+#   1. docker compose up -d          # 启动 MySQL
+#   2. 后端以 mysql profile 启动：SPRING_PROFILES_ACTIVE=mysql ./gradlew bootRun
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: smartchat-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123456
+      MYSQL_DATABASE: smartchat
+      MYSQL_USER: smartchat
+      MYSQL_PASSWORD: smartchat123
+    ports:
+      - '3306:3306'
+    volumes:
+      - smartchat-mysql-data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+volumes:
+  smartchat-mysql-data:
